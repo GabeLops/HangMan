@@ -112,6 +112,8 @@ class ViewController: UIViewController {
             
         }
     func submit(_ answer: String) {
+        //if letter correct replace ? with actual letter and add score.
+        //if not correct score -1 and somehow show how many tries left
         if answer.count == 1 {
             
         }else {
