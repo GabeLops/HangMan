@@ -15,10 +15,10 @@ class ViewController: UIViewController {
     var scoreLabel: UILabel!
     var cluesLabel: UILabel!
     var answerLabel: UILabel!
-    var wrongAnswer = 0 {
+    var wrongAnswer = 7 {
         didSet {
             if wrongAnswer < 0 {wrongAnswer = 0}
-            wrongAnswers.text = "You have 7 attempts: \(wrongAnswer)"
+            wrongAnswers.text = "You have \(wrongAnswer) attempts"
         }
     }
     
@@ -38,7 +38,7 @@ class ViewController: UIViewController {
         wrongAnswers = UILabel()
         wrongAnswers.translatesAutoresizingMaskIntoConstraints = false
         wrongAnswers.textAlignment = .left
-        wrongAnswers.text = "You have 7 attempts"
+        wrongAnswers.text = "You have \(wrongAnswer) attempts"
         view.addSubview(wrongAnswers)
         
         
@@ -128,7 +128,7 @@ class ViewController: UIViewController {
     
     @objc func restartGame() {
         usedLetters.removeAll()
-        wrongAnswer = 0
+        wrongAnswer = 7
         
         let ac = UIAlertController(title: "New Game", message: nil, preferredStyle: .alert)
         ac.addAction(UIAlertAction(title: "Okay", style: .default))
@@ -147,6 +147,7 @@ class ViewController: UIViewController {
             }
         }
         answerLabel.text = promptWord
+        cluesLabel.text = " "
 
         }
         
@@ -154,7 +155,7 @@ class ViewController: UIViewController {
     
     @objc func startGame() {
         usedLetters.removeAll()
-        wrongAnswer = 0
+        wrongAnswer = 7
         let ac = UIAlertController(title: "New Game", message: nil, preferredStyle: .alert)
         ac.addAction(UIAlertAction(title: "Okay", style: .default))
         present(ac, animated: true)
@@ -171,11 +172,12 @@ class ViewController: UIViewController {
             }
         }
         answerLabel.text = promptWord
+        cluesLabel.text = " "
 
     }
     
     func gameOver() {
-        let gg = UIAlertController(title: "Game Over", message: "Would you like to try again?", preferredStyle: .alert)
+        let gg = UIAlertController(title: "Game Over", message: "your word was \(title!), Would you like to try again?", preferredStyle: .alert)
         gg.addAction(UIAlertAction(title: "Cancel", style: .cancel))
         gg.addAction(UIAlertAction(title: "Okay", style: .default, handler: {
             (action: UIAlertAction)  in
@@ -188,10 +190,10 @@ class ViewController: UIViewController {
     func submit(_ answer: String) {
         
         if !title!.contains(answer){
-            if wrongAnswer == 6 {
+            if wrongAnswer == 1 {
                 gameOver()
             }else{
-                wrongAnswer += 1
+                wrongAnswer -= 1
             }
         }
         if answer.count == 1 {
